@@ -9,8 +9,8 @@ export type ClaimEarningsViewProps = {
   protocol: GraphQLProps<Protocol>,
   history: History,
   me: GraphQLProps<Account>,
-  claimEarnings: any => void,
-  onClaimMore: any => void,
+  claimEarnings: (any) => void,
+  onClaimMore: (any) => void,
 }
 
 const ClaimEarningsView: React.ComponentType<ClaimEarningsViewProps> = ({
@@ -28,8 +28,9 @@ const ClaimEarningsView: React.ComponentType<ClaimEarningsViewProps> = ({
   const loading = currentRound.loading || me.loading
   const from = MathBN.add(lastClaimRound, '1')
   const diff = MathBN.sub(to, lastClaimRound)
-  const { maxEarningsClaimsRounds } = protocol.data
+  const maxEarningsClaimsRounds = 100
   const closeModal = () => history.push(history.location.pathname)
+
   return (
     <BasicModal title="Claim Your Earnings" onClose={closeModal}>
       <ClaimEarningsForm
