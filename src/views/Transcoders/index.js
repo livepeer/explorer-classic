@@ -41,20 +41,22 @@ const TranscodersView: React.ComponentType<TranscodersViewProps> = ({
   unbond,
 }) => {
   const {
-    delegator: { bondedAmount, delegateAddress, pendingStake, status },
+    delegator: { id, bondedAmount, delegateAddress, pendingStake, status },
   } = me.data
   const totalStake = MathBN.max(bondedAmount, pendingStake)
   const isBonded = status === 'Bonded'
-  const isTranscoder = me.data.transcoder.status === 'Registered'
+  const isTranscoder =
+    me.data.transcoder.delegator &&
+    me.data.transcoder.delegator.id === me.data.id
   const searchParams = new URLSearchParams(history.location.search)
   const TOUR_ENABLED = !!searchParams.get('tour')
   const sort = searchParams.get('sort') || 'totalStake'
   const order = searchParams.get('order') || 'desc'
   const asc = order === 'asc'
-  const total = transcoders.data.filter(t => t.status === 'Registered').length
+  const total = transcoders.data.filter((t) => t.status === 'Registered').length
   const compareFn = createCompareFunction(asc, sort)
   const locked = window.livepeer.config.accounts.length <= 0
-  const numActive = (transcoders => {
+  const numActive = ((transcoders) => {
     let n = 0
     for (const trans of transcoders.data) {
       const active =
@@ -70,7 +72,7 @@ const TranscodersView: React.ComponentType<TranscodersViewProps> = ({
       <ScrollToTopOnMount />
       <BasicNavbar
         history={history}
-        onSearch={x => history.push(`/accounts/${x}`)}
+        onSearch={(x) => history.push(`/accounts/${x}`)}
       />
       <Banner height="128px">
         <PageHeading className="page-heading">
@@ -114,107 +116,113 @@ const TranscodersView: React.ComponentType<TranscodersViewProps> = ({
             </p>
           </InlineHint>
         )}
-        {/** Empty State */ !total && (
-          <div style={{ textAlign: 'center' }}>
-            {transcoders.loading && <h2>Loading transcoders...</h2>}
-            {!transcoders.loading && <h2>There are no transcoders</h2>}
-          </div>
-        )}
-        {/** Toolbar */ !total ? null : (
-          <div
-            className="filter-sort"
-            style={{
-              display: 'flex',
-              marginBottom: 16,
-              padding: '0 8px',
-              borderBottom: '1px solid #ddd',
-            }}
-          >
-            <p>
-              Showing 1 - {total} of {total}
-            </p>
+        {
+          /** Empty State */ !total && (
+            <div style={{ textAlign: 'center' }}>
+              {transcoders.loading && <h2>Loading transcoders...</h2>}
+              {!transcoders.loading && <h2>There are no transcoders</h2>}
+            </div>
+          )
+        }
+        {
+          /** Toolbar */ !total ? null : (
             <div
+              className="filter-sort"
               style={{
-                display: 'inline-flex',
-                flexGrow: 1,
-                alignItems: 'center',
-                justifyContent: 'flex-end',
+                display: 'flex',
+                marginBottom: 16,
+                padding: '0 8px',
+                borderBottom: '1px solid #ddd',
               }}
             >
-              <div style={{ marginLeft: 16 }}>
-                <span
-                  style={{
-                    textTransform: 'uppercase',
-                    fontSize: 11,
-                    letterSpacing: 1,
-                  }}
-                >
-                  sort by: &nbsp;
-                </span>
-                <select
-                  defaultValue={sort}
-                  onChange={e => {
-                    const { value } = e.target
-                    searchParams.set('sort', value)
-                    const queryString = searchParams.toString()
-                    const url = `${match.path}?${queryString}`
-                    history.replace(url)
-                  }}
-                >
-                  <option value="totalStake">Total Stake</option>
-                  <option value="pendingRewardCut">Reward Cut</option>
-                  <option value="pendingFeeShare">Fee Share</option>
-                  <option value="missedCalls">Missed Reward Calls</option>
-                </select>
-              </div>
-              <div style={{ marginLeft: 16 }}>
-                <span
-                  style={{
-                    textTransform: 'uppercase',
-                    fontSize: 11,
-                    letterSpacing: 1,
-                  }}
-                >
-                  order by: &nbsp;
-                </span>
-                <select
-                  defaultValue={order}
-                  onChange={e => {
-                    const { value } = e.target
-                    searchParams.set('order', value)
-                    const queryString = searchParams.toString()
-                    const url = `${match.path}?${queryString}`
-                    history.replace(url)
-                  }}
-                >
-                  <option value="desc">Desc</option>
-                  <option value="asc">Asc</option>
-                </select>
+              <p>
+                Showing 1 - {total} of {total}
+              </p>
+              <div
+                style={{
+                  display: 'inline-flex',
+                  flexGrow: 1,
+                  alignItems: 'center',
+                  justifyContent: 'flex-end',
+                }}
+              >
+                <div style={{ marginLeft: 16 }}>
+                  <span
+                    style={{
+                      textTransform: 'uppercase',
+                      fontSize: 11,
+                      letterSpacing: 1,
+                    }}
+                  >
+                    sort by: &nbsp;
+                  </span>
+                  <select
+                    defaultValue={sort}
+                    onChange={(e) => {
+                      const { value } = e.target
+                      searchParams.set('sort', value)
+                      const queryString = searchParams.toString()
+                      const url = `${match.path}?${queryString}`
+                      history.replace(url)
+                    }}
+                  >
+                    <option value="totalStake">Total Stake</option>
+                    <option value="pendingRewardCut">Reward Cut</option>
+                    <option value="pendingFeeShare">Fee Share</option>
+                    <option value="missedCalls">Missed Reward Calls</option>
+                  </select>
+                </div>
+                <div style={{ marginLeft: 16 }}>
+                  <span
+                    style={{
+                      textTransform: 'uppercase',
+                      fontSize: 11,
+                      letterSpacing: 1,
+                    }}
+                  >
+                    order by: &nbsp;
+                  </span>
+                  <select
+                    defaultValue={order}
+                    onChange={(e) => {
+                      const { value } = e.target
+                      searchParams.set('order', value)
+                      const queryString = searchParams.toString()
+                      const url = `${match.path}?${queryString}`
+                      history.replace(url)
+                    }}
+                  >
+                    <option value="desc">Desc</option>
+                    <option value="asc">Asc</option>
+                  </select>
+                </div>
               </div>
             </div>
-          </div>
-        )}
-        {/* Results */ [...transcoders.data].sort(compareFn).map(props => {
-          const myId = me.data.id // delegator id
-          const { id } = props // transcoder id
-          const isMyDelegate = id === delegateAddress
-          const canBond =
-            myId && (!isTranscoder || (isTranscoder && id === myId))
-          const canUnbond = myId && isBonded && isMyDelegate
-          return (
-            <TranscoderCard
-              {...props}
-              currentRound={currentRound}
-              numActive={numActive}
-              key={id}
-              bonded={isMyDelegate}
-              bondedAmount={totalStake}
-              className="transcoder-card"
-              onBond={canBond ? () => bond({ id }) : undefined}
-              onUnbond={canUnbond ? () => unbond({ id }) : undefined}
-            />
           )
-        })}
+        }
+        {
+          /* Results */ [...transcoders.data].sort(compareFn).map((props) => {
+            const myId = me.data.id // delegator id
+            const { id } = props // transcoder id
+            const isMyDelegate = id === delegateAddress
+            const canBond =
+              myId && (!isTranscoder || (isTranscoder && id === myId))
+            const canUnbond = myId && isBonded && isMyDelegate
+            return (
+              <TranscoderCard
+                {...props}
+                currentRound={currentRound}
+                numActive={numActive}
+                key={id}
+                bonded={isMyDelegate}
+                bondedAmount={totalStake}
+                className="transcoder-card"
+                onBond={canBond ? () => bond({ id }) : undefined}
+                onUnbond={canUnbond ? () => unbond({ id }) : undefined}
+              />
+            )
+          })
+        }
       </Content>
       {TOUR_ENABLED && (
         <Tour
@@ -271,8 +279,8 @@ const createCompareFunction = (asc: boolean, sort: string) => (
   let _a: number
   let _b: number
   if (sort === 'missedCalls') {
-    _a = new BN(a['pools'].filter(r => r.rewardTokens === null).length, 10)
-    _b = new BN(b['pools'].filter(r => r.rewardTokens === null).length, 10)
+    _a = new BN(a['pools'].filter((r) => r.rewardTokens === null).length, 10)
+    _b = new BN(b['pools'].filter((r) => r.rewardTokens === null).length, 10)
   } else {
     _a = new BN(a[sort], 10)
     _b = new BN(b[sort], 10)

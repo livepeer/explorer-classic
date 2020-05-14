@@ -280,7 +280,7 @@ const ProtocolQuery = gql`
   }
 
   query ProtocolQuery {
-    protocol {
+    protocol(id: "0") {
       ...ProtocolFragment
     }
   }

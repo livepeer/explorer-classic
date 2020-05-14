@@ -116,6 +116,11 @@ export default async function createApolloClient(
       extend type Round {
         lastInitializedRound: String
       }
+      extend type Protocol {
+        totalBondedToken: String
+        transcoderPoolMaxSize: String
+        totalTokenSupply: String
+      }
     `
     return mergeSchemas({
       schemas: [schema, transformedSubgraphSchema, linkTypeDefs],
