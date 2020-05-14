@@ -112,7 +112,7 @@ const BasicNavbar = ({ onSearch, currentRound, toasts, coinbase, history }) => {
 
         <NavbarLinks>
           <Form
-            onSubmit={e => {
+            onSubmit={(e) => {
               e.preventDefault()
               const data = new FormData(e.target)
               history.push(`/accounts/${data.get('address')}`)
@@ -125,7 +125,7 @@ const BasicNavbar = ({ onSearch, currentRound, toasts, coinbase, history }) => {
               type="search"
               pattern="^0x[a-fA-F0-9]{40}$"
               placeholder="Enter an ETH account address"
-              onChange={e => {
+              onChange={(e) => {
                 const re = new RegExp(e.target.pattern)
                 const sub = document.getElementById('sub')
                 const invalidColor = '#868686'
@@ -165,7 +165,7 @@ const BasicNavbar = ({ onSearch, currentRound, toasts, coinbase, history }) => {
                 const { pathname } = location
                 const [addr] = pathname
                   .split('/')
-                  .filter(x => x.substring(0, 2) === '0x')
+                  .filter((x) => x.substring(0, 2) === '0x')
                 return addr ? addr.toLowerCase() === myAccountAddress : false
               }}
             >
@@ -223,7 +223,7 @@ const BasicNavbar = ({ onSearch, currentRound, toasts, coinbase, history }) => {
                 style={{
                   width: '95%',
                 }}
-                onSubmit={e => {
+                onSubmit={(e) => {
                   e.preventDefault()
                   const data = new FormData(e.target)
                   history.push(`/accounts/${data.get('address')}`)
@@ -236,7 +236,7 @@ const BasicNavbar = ({ onSearch, currentRound, toasts, coinbase, history }) => {
                   type="search"
                   pattern="^0x[a-fA-F0-9]{40}$"
                   placeholder="Enter an ETH account address"
-                  onChange={e => {
+                  onChange={(e) => {
                     const re = new RegExp(e.target.pattern)
                     const sub = document.getElementById('sub2')
                     const invalidColor = '#868686'
@@ -307,7 +307,7 @@ const NavbarLinks = styled.div`
 `
 
 const NavbarLink = styled(NavLink).attrs({
-  activeStyle: props => ({
+  activeStyle: (props) => ({
     color: 'var(--primary)',
     backgroundImage:
       'linear-gradient(to bottom,rgba(0,0,0,0),rgba(0,0,0,0) 0px,var(--primary) 0px,var(--primary) 4px,rgba(0,0,0,0) 4px)',

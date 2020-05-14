@@ -24,7 +24,7 @@ type nestFunc = (
  * Creates a component which nests given components from right to left
  */
 export const nest: nestFunc = (A, B, ...rest) => {
-  const C = props => (
+  const C = (props) => (
     <A {...props}>
       <B />
     </A>
@@ -46,9 +46,9 @@ export const cond: condFunc = (() => {
   /**
    * Conditionally renders children if `test` prop is truthy
    */
-  const Cond: CondProps => React.Node = ({ test, children, ...props }) =>
+  const Cond: (CondProps) => React.Node = ({ test, children, ...props }) =>
     !test ? null : React.cloneElement(children, props)
-  return child => nest(Cond, child)
+  return (child) => nest(Cond, child)
 })()
 
 /**
@@ -67,7 +67,7 @@ export const withProp = (key: string, value: any) => (
  * Adds a `paths` object to props
  */
 export const withPathMatches = (matches: { [key: string]: string }) =>
-  mapProps(props => {
+  mapProps((props) => {
     return {
       ...props,
       paths: Object.entries(matches).reduce((paths, [key, path]) => {
@@ -241,7 +241,6 @@ const CurrentRoundQuery = gql`
   fragment RoundFragment on Round {
     id
     initialized
-    lastInitializedRound
     length
     startBlock
   }
