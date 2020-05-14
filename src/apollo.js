@@ -83,13 +83,15 @@ export default async function createApolloClient(
     etherscanApiKey: options.etherscanApiKey,
   }
 
+  const SUBGRAPH = 'https://api.thegraph.com/subgraphs/name/livepeer/livepeer'
+
   /**
    * Merges remote graphql schema with local one
    * @return {Object}
    */
   async function createSchema() {
     const subgraphServiceLink = new HttpLink({
-      uri: 'https://api.thegraph.com/subgraphs/name/livepeer/livepeer',
+      uri: SUBGRAPH,
     })
 
     const createSubgraphServiceSchema = async () => {
@@ -111,9 +113,37 @@ export default async function createApolloClient(
       extend type Transcoder {
         ensName: String
       }
+      extend type Round {
+        lastInitializedRound: String
+      }
     `
     return mergeSchemas({
       schemas: [schema, transformedSubgraphSchema, linkTypeDefs],
+      resolvers: {
+        Round: {
+          lastInitializedRound: {
+            async resolve(_obj, _args, _context, _info) {
+              const {
+                data: { data },
+              } = await axios({
+                url: SUBGRAPH,
+                method: 'post',
+                data: {
+                  query: `
+                  {
+                    protocol(id: "0") {
+                      lastInitializedRound
+                    }
+                  }
+                    `,
+                },
+              })
+
+              return data.protocol.lastInitializedRound
+            },
+          },
+        },
+      },
     })
   }
 
@@ -231,7 +261,7 @@ export default async function createApolloClient(
               'Upgraded schema cache persistor storage apollo schema version',
             )
           })
-          .catch(err => {
+          .catch((err) => {
             console.warn(
               'Could not upgrade schema cache persistor storage apollo schema version',
             )
@@ -259,8 +289,8 @@ export default async function createApolloClient(
         })
       : null
     const mainLink = new ApolloLink(
-      operation =>
-        new Observable(async observer => {
+      (operation) =>
+        new Observable(async (observer) => {
           const { query, variables, operationName } = operation
           const [def] = query.definitions
           const mergedSchema = await createSchema()
@@ -273,13 +303,13 @@ export default async function createApolloClient(
               variables,
               operationName,
             )
-              .then(async sub => {
+              .then(async (sub) => {
                 while (true) {
                   const { value } = await sub.next()
                   observer.next(value)
                 }
               })
-              .catch(e => {
+              .catch((e) => {
                 console.error(e)
                 observer.error(e)
               })
@@ -292,11 +322,11 @@ export default async function createApolloClient(
               variables,
               operationName,
             )
-              .then(value => {
+              .then((value) => {
                 observer.next(value)
                 observer.complete(value)
               })
-              .catch(e => {
+              .catch((e) => {
                 console.error(e)
                 observer.error(e)
               })
