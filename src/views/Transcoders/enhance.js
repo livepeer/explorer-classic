@@ -27,16 +27,13 @@ const MeDelegatorTranscoderQuery = gql`
 
   fragment TranscoderFragment on Transcoder {
     id
-    active
-    status
+    delegator {
+      id
+    }
     rewardCut
     feeShare
     activationRound
     deactivationRound
-    pricePerSegment
-    pendingRewardCut
-    pendingFeeShare
-    pendingPricePerSegment
     pools(orderBy: id, orderDirection: desc) {
       rewardTokens
       round {
