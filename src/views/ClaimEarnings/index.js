@@ -23,12 +23,11 @@ const ClaimEarningsView: React.ComponentType<ClaimEarningsViewProps> = ({
   onClaimMore,
   ...props
 }) => {
-  const { lastInitializedRound: to } = currentRound.data
+  const { maxEarningsClaimsRounds, lastInitializedRound: to } = protocol.data
   const { lastClaimRound } = me.data.delegator
   const loading = currentRound.loading || me.loading
   const from = MathBN.add(lastClaimRound, '1')
   const diff = MathBN.sub(to, lastClaimRound)
-  const maxEarningsClaimsRounds = 100
   const closeModal = () => history.push(history.location.pathname)
 
   return (
