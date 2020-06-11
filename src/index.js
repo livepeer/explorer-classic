@@ -130,7 +130,7 @@ const hot = module.hot && isDev
   const client = await createApolloClient(async () => {
     const opts = {
       // Allow builds to configure the http provider
-      provider: process.env.REACT_APP_HTTP_PROVIDER,
+      provider: 'https://mainnet.infura.io/v3/b4aafb129382481399d689a5c9d35287',
       // Default gas limit to send with transactions (2.1m wei)
       defaultGas: 2.1 * 1000000,
       // Etherscan API Key
@@ -188,7 +188,7 @@ const hot = module.hot && isDev
     document.body.appendChild(script)
     script.onload = () => {
       window.dataLayer = window.dataLayer || []
-      window.gtag = function() {
+      window.gtag = function () {
         window.dataLayer.push(arguments)
       }
       window.gtag('js', new Date())
