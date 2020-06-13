@@ -1430,10 +1430,10 @@
     graphql-tools "^4.0.4"
     graphql-type-json "^0.3.0"
 
-"@livepeer/sdk@1.0.0-alpha.6":
-  version "1.0.0-alpha.6"
-  resolved "https://registry.yarnpkg.com/@livepeer/sdk/-/sdk-1.0.0-alpha.6.tgz#ae1928be5f9eb9de13ad85c190f09735ec1b3ec7"
-  integrity sha512-DUzbaDFCjsttqAILCK6kUvIEfaZZps4NCqxFhas85XNF3fSFga7hKocZpjJTG7ynHm3fhlOpM4RXEOrwA5ttUw==
+"@livepeer/sdk@1.0.0-alpha.13":
+  version "1.0.0-alpha.13"
+  resolved "https://registry.yarnpkg.com/@livepeer/sdk/-/sdk-1.0.0-alpha.13.tgz#c7976d2eeebec15c97509f2c4721ab9ea4122ea9"
+  integrity sha512-1DVgbG73oD8Jvihe3Ylw8LxkWDLr6DbWZWgHL3JsrU48or8g9CsNo9UebEiKwsFNo597JH4ZgTjx6UmpKOlg7Q==
   dependencies:
     "@babel/runtime" "^7.4.3"
     cross-env "^5.2.0"
@@ -1444,10 +1444,10 @@
     ethjs-provider-signer "^0.1.4"
     ethjs-query "^0.3.1"
 
-"@livepeer/sdk@1.0.0-alpha.8":
-  version "1.0.0-alpha.8"
-  resolved "https://registry.yarnpkg.com/@livepeer/sdk/-/sdk-1.0.0-alpha.8.tgz#3c4c7dabe13e1f588242a73d3d89f9bd50821ab0"
-  integrity sha512-EFiKGCz1+QXipOgwrh0SvFQI5Z3mSD/513A4uuM+9skN9LTw82ZxONitLOsg4JL16KmyrdTRlDLjEuF8ynJpPA==
+"@livepeer/sdk@1.0.0-alpha.6":
+  version "1.0.0-alpha.6"
+  resolved "https://registry.yarnpkg.com/@livepeer/sdk/-/sdk-1.0.0-alpha.6.tgz#ae1928be5f9eb9de13ad85c190f09735ec1b3ec7"
+  integrity sha512-DUzbaDFCjsttqAILCK6kUvIEfaZZps4NCqxFhas85XNF3fSFga7hKocZpjJTG7ynHm3fhlOpM4RXEOrwA5ttUw==
   dependencies:
     "@babel/runtime" "^7.4.3"
     cross-env "^5.2.0"
