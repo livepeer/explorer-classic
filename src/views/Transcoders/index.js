@@ -55,7 +55,8 @@ const TranscodersView: React.ComponentType<TranscodersViewProps> = ({
   const asc = order === 'asc'
   const total = transcoders.data.filter((t) => t.status === 'Registered').length
   const compareFn = createCompareFunction(asc, sort)
-  const locked = window.livepeer.config.accounts.length <= 0
+  const locked =
+    !window.ethereum || (window.ethereum && !window.ethereum.selectedAddress)
   const numActive = ((transcoders) => {
     let n = 0
     for (const trans of transcoders.data) {
