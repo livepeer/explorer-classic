@@ -54,7 +54,7 @@ const AccountDelegating: React.ComponentType<AccountDelegatingProps> = ({
   } = delegator.data
 
   if (unbondlocks) {
-    unbondlocks = unbondlocks.filter(item => item['withdrawRound'] !== '0')
+    unbondlocks = unbondlocks.filter((item) => item['withdrawRound'] !== '0')
   }
 
   const totalStake = MathBN.max(bondedAmount, pendingStake)
@@ -101,7 +101,7 @@ const AccountDelegating: React.ComponentType<AccountDelegatingProps> = ({
             'N/A'
           ) : (
             <Link
-              onClick={e => {
+              onClick={(e) => {
                 if (delegateAddress === accountId) e.preventDefault()
               }}
               to={`/accounts/${delegateAddress}`}

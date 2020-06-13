@@ -29,7 +29,7 @@ const App = () => (
           path="/me"
           render={({ location }, ctx) => {
             const { pathname, search } = location
-            const account = window.livepeer.config.defaultTx.from
+            const account = window.ethereum.selectedAddress
             const authenticated =
               account &&
               account !== '0x0000000000000000000000000000000000000000'
