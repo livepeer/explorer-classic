@@ -129,8 +129,6 @@ const hot = module.hot && isDev
   // bootstrap the apollo client
   const client = await createApolloClient(async () => {
     const opts = {
-      // Allow builds to configure the http provider
-      provider: 'https://mainnet.infura.io/v3/b4aafb129382481399d689a5c9d35287',
       // Default gas limit to send with transactions (2.1m wei)
       defaultGas: 2.1 * 1000000,
       // Etherscan API Key
