@@ -229,7 +229,6 @@ export default async function createApolloClient(
     const gas = options.defaultGas || 0
     const { controllerAddress } = options
     return Livepeer({
-      provider: 'https://mainnet.infura.io/v3/b4aafb129382481399d689a5c9d35287',
       account,
       gas,
       provider,
