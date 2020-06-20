@@ -1651,10 +1651,10 @@
     graphql-tools "^4.0.4"
     graphql-type-json "^0.3.0"
 
-"@livepeer/sdk@1.0.0-alpha.13":
-  version "1.0.0-alpha.13"
-  resolved "https://registry.yarnpkg.com/@livepeer/sdk/-/sdk-1.0.0-alpha.13.tgz#c7976d2eeebec15c97509f2c4721ab9ea4122ea9"
-  integrity sha512-1DVgbG73oD8Jvihe3Ylw8LxkWDLr6DbWZWgHL3JsrU48or8g9CsNo9UebEiKwsFNo597JH4ZgTjx6UmpKOlg7Q==
+"@livepeer/sdk@1.0.0-alpha.18":
+  version "1.0.0-alpha.18"
+  resolved "https://registry.yarnpkg.com/@livepeer/sdk/-/sdk-1.0.0-alpha.18.tgz#1a8ee18be887d4faf3c16a9cab12baca84b87093"
+  integrity sha512-5jnSKRaC/5hQXcCf7tnJYDRecqLgftAHV/JzHbXeWgcGi+OOF4ihzsYVvd8cvXoJBF79BLh8Lw8rBQdP2a+9ig==
   dependencies:
     "@babel/runtime" "^7.4.3"
     cross-env "^5.2.0"

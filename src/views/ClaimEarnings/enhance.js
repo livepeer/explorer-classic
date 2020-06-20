@@ -56,8 +56,6 @@ const mapMutationHandlers = withHandlers({
     try {
       const { lastClaimRound } = me.data.delegator
       const endRound = MathBN.add(lastClaimRound, numRounds)
-      console.log('lastClaimRound', lastClaimRound)
-      console.log('claimEarnings', endRound)
       await claimEarnings({
         variables: { endRound },
         refetchQueries: [
